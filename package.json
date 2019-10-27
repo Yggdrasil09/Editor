@@ -1,0 +1,16 @@
+{
+  "name": "txteditor",
+  "version": "1.0.0",
+  "description": "An OS project to build a text editor.",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^7.0.0",
+    "electron-reload": "^1.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "P Karthik",
+  "license": "MIT"
+}
