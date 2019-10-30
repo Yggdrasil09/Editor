@@ -1,75 +1,41 @@
-function deleteAt(string, index) {
-  return string.substr(0, index) + string.substr(index + 1);
-}
+var tabs = [];
+let tab_bars = document.getElementById("tab-bars");
+let code_editors = [];
+let body_area = document.getElementById("content-area");
 
-let masters = ["https://loki.gauntlet.cloudbees.com/"];
-let jobs = [
-  "cloudbees-cd-analytics/master",
-  "cloudbees-cd-analytics/staging",
-  "prod-deploy/master"
-];
-
-jobs.pop(); 
-
-let json = {
-  phases: [
-    {
-      id: "dev",
-      name: "Dev",
-      gates: [
-        {
-          id: "dev",
-          name: "Dev",
-          master: "https://loki.gauntlet.cloudbees.com/",
-          job: "cloudbees-cd-analytics/master",
-          feeds: "staging"
-        }
-      ]
-    },
-    {
-      id: "staging",
-      name: "Staging",
-      gates: [
-        {
-          id: "staging",
-          name: "Staging",
-          master: "https://loki.gauntlet.cloudbees.com/",
-          job: "cloudbees-cd-analytics/staging",
-          feeds: "production"
-        }
-      ]
-    },
-    {
-      id: "production",
-      name: "Production",
-      gates: [
-        {
-          id: "production",
-          name: "Production",
-          master: "https://loki.gauntlet.cloudbees.com/",
-          job: "prod-deploy/master"
-        }
-      ]
+document.onkeyup = function(e) {
+  if (e.ctrlKey && e.which == 78) {
+    let tag = document.createElement("li");
+    let link = document.createElement("a");
+    $(link)
+      .attr("href", "#menu" + (tabs.length + 1).toString())
+      .attr("data-toggle", "tab");
+    link.innerHTML = "New Tab";
+    if (tabs.length == 0) {
+      $(tag).addClass("active");
     }
-  ]
+    $(tag).append(link);
+    $(tab_bars).append(tag);
+    let div = document.createElement("div");
+    let label = document.createElement("label");
+    let text_area = document.createElement("textarea");
+    $(div)
+      .addClass("tab-pane fade in active")
+      .attr("id", "menu" + (tabs.length + 1).toString());
+    $(text_area).attr("id", "code" + (tabs.length + 1).toString());
+    $(label).append(text_area);
+    $(div).append(label);
+    $(body_area).append(div);
+    tabs.push(["New Tab", "default"]);
+    let textarea = document.getElementById("code"+tabs.length.toString());
+    let editor = CodeMirror.fromTextArea(textarea, {
+    lineNumbers: true,
+    border: true,
+    theme: "eclipse",
+    mode: "application/json",
+    gutters: ["CodeMirror-lint-markers"],
+    styleActiveLine: true,
+    lint: true
+    });
+  }
 };
-
-let stringified = JSON.stringify(json, null, 2);
-stringified = deleteAt(stringified, 110); // remove a comma
-
-let textarea = document.getElementById("code");
-textarea.value = stringified;
-
-let editor = CodeMirror.fromTextArea(textarea, {
-  lineNumbers: true,
-  border: true,
-  theme: "eclipse",
-  mode: "application/json",
-  gutters: ["CodeMirror-lint-markers"],
-  styleActiveLine: true,
-  lint: true
-});
-
-// var container = document.createElement("div")
-// container.innerText = "Unknown job."
-// editor.addLineWidget(9, container)

@@ -2,8 +2,9 @@ body {
   font-family: Lato, sans-serif;
   font-size: 14px;
   color: #4a4a4a;
-  padding: 50px;
   -webkit-font-smoothing: antialiased;
+  min-height:100vh;
+  overflow-x: hidden;
 }
 
 textarea {
@@ -15,6 +16,15 @@ textarea {
   padding: 4px;
 }
 
+.container{
+  margin:0!important;
+  padding:0!important;
+}
+
+#myDiv{
+  min-width:100%;
+}
+
 .CodeMirror {
   border: 1px solid rgba(73, 73, 73, 0.2);
   border-radius: 3px;
@@ -22,7 +32,8 @@ textarea {
   font-family: "Source Code Pro", monospace;
   font-size: 13px;
   line-height: 20px;
-  height: 600px;
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
 .CodeMirror-gutters {

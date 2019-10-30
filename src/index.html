@@ -5,27 +5,46 @@
     <meta charset="UTF-8" />
     <title>TxtEditor</title>
     <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self';" /> -->
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.css'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/theme/eclipse.css'>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/lint/lint.css'>
-    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/theme/eclipse.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/lint/lint.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script>
+        if (typeof module === "object") {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        if (window.module) module = window.module;
+    </script>
 </head>
 
 <body>
-    <label>
-        <textarea id="code"></textarea>
-    </label>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/mode/javascript/javascript.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/selection/active-line.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/lint/lint.js'></script>
+    <div id="myDiv" class="container">
+        <div id="myDiv">
+            <ul id="tab-bars" class="nav nav-tabs">
+            </ul>
+            <div id="content-area" class="tab-content">
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/mode/javascript/javascript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/selection/active-line.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/lint/lint.js"></script>
     <script
-        src='https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/lint/json-lint.js'></script>
-    <script src="./script.js"></script>
+        src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/addon/lint/json-lint.js"></script>
+    <script>
+        require("./script.js");
+    </script>
 </body>
 
 </html>

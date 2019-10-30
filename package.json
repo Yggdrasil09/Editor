@@ -4,12 +4,14 @@
   "description": "An OS project to build a text editor.",
   "main": "main.js",
   "dependencies": {
+    "dragula": "^3.7.2",
     "electron": "^7.0.0",
-    "electron-reload": "^1.5.0"
+    "electron-reload": "^1.5.0",
+    "electron-tabs": "^0.11.0"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "electron ."
+    "start": "electron --no-sandbox ."
   },
   "author": "P Karthik",
   "license": "MIT"
