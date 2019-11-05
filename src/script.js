@@ -10,7 +10,7 @@ document.onkeyup = function(e) {
     $(link)
       .attr("href", "#menu" + (tabs.length + 1).toString())
       .attr("data-toggle", "tab");
-    link.innerHTML = "New Tab";
+    link.innerHTML = "New Tab "+'<i class="fa fa-close" style="font-size:18px;cursor:pointer" ></i>';
     if (tabs.length == 0) {
       $(tag).addClass("active");
     }
@@ -27,15 +27,15 @@ document.onkeyup = function(e) {
     $(div).append(label);
     $(body_area).append(div);
     tabs.push(["New Tab", "default"]);
-    let textarea = document.getElementById("code"+tabs.length.toString());
+    let textarea = document.getElementById("code" + tabs.length.toString());
     let editor = CodeMirror.fromTextArea(textarea, {
-    lineNumbers: true,
-    border: true,
-    theme: "eclipse",
-    mode: "application/json",
-    gutters: ["CodeMirror-lint-markers"],
-    styleActiveLine: true,
-    lint: true
+      lineNumbers: true,
+      border: true,
+      theme: "eclipse",
+      mode: "application/json",
+      gutters: ["CodeMirror-lint-markers"],
+      styleActiveLine: true,
+      lint: true
     });
   }
 };

@@ -86,3 +86,8 @@ textarea {
 .cm-s-eclipse span.cm-string.cm-property {
   color: #53b10b;
 }
+
+#firepad-container {
+  width: 100%;
+  height: 100%;
+}
