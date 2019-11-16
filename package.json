@@ -4,6 +4,7 @@
   "description": "An OS project to build a text editor.",
   "main": "main.js",
   "dependencies": {
+    "automerge": "^0.12.1",
     "codemirror": "^5.49.2",
     "conclavity": "^1.0.14",
     "dragula": "^3.7.2",
