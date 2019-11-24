@@ -5,6 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height:100vh;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 textarea {
@@ -14,6 +15,7 @@ textarea {
   font-size: 13px;
   line-height: 20px;
   padding: 4px;
+  overflow-y: hidden;
 }
 
 .container{
@@ -91,3 +93,47 @@ textarea {
   width: 100%;
   height: 100%;
 }
+
+.bubbly-button {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1.5rem;
+  padding: 1em 1.5em;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #ff0550;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  margin-left:85%;
+  margin-top:1vh;  
+  z-index:3;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 43, 0.5);
+  visibility: visible;
+}
+
+.move1{
+  margin-left:93%;
+}
+
+.active1{
+  visibility:hidden;
+}
+
+.active2{
+  visibility:hidden;
+}
+
+.bubbly-button:focus {
+  outline: 0;
+}
+
+.bubbly-button:active {
+  transform: scale(0.9);
+  background-color: #eb0074;
+  box-shadow: 0 2px 25px rgba(255, 0, 106, 0.2);
+}
+

@@ -1,5 +1,6 @@
-const { ipcRenderer } = require("electron");
+const {ipcRenderer} = require('electron')
 const prompt = require('electron-prompt');
+const fs = require('fs');
 
 var tabs = [];
 let tab_bars = document.getElementById("tab-bars");
@@ -44,7 +45,7 @@ window.onkeyup = function(e) {
     $(div).append(label);
     $(body_area).append(div);
 
-    tabs.push(["Untitled Tab", "default", tabs.length + 1]);
+    tabs.push(["Untitled Tab", "default", tabs.length + 1,false,""]);
 
     let textarea = document.getElementById("code" + tabs.length.toString());
     let editor = CodeMirror.fromTextArea(textarea, {
@@ -93,18 +94,44 @@ window.onkeyup = function(e) {
                 ' <i class="fa fa-close" id="close' +
                 (tabs[i][2]).toString() +
                 '" style="font-size:18px;cursor:pointer" ></i>';
+                
+                code_editors[i].on('change',()=>{
+                  let text = code_editors[i].getValue();
+                  let data = {
+                    txt : text,
+                    filenme : filename
+                  }
+                  var savefile_worker = new Worker('../savefile.js');
+
+                  savefile_worker.postMessage(data);
+
+                  savefile_worker.addEventListener('message',(e)=>{
+                    if(e === 'Done');
+                  },false);
+
+                  if(tabs[i][3] == true)
+                  {
+                    let data = {
+                      txt : text,
+                      filenme : filename,
+                      url : tabs[i][4]
+                    }
+                    console.log("connecting...")
+                    var share_worker = new Worker('../request.js');
+                    share_worker.postMessage(data);
+                  }  
+                })
               }
           })
           .catch(console.error);
         }
 
-				let text = code_editors[i].getValue();
-				ipcRenderer.send("save-file", text);
 			}
 		}
 	}
 
 };
+
 
 setInterval(() => {
   for (let i = 0; i < tabs.length; i++) {
@@ -128,11 +155,82 @@ setInterval(() => {
         }
       });
   }
+  if(tabs.length!=0)
+  {
+    $(document.getElementById('livebutton')).removeClass('active1');
+    $(document.getElementById('connectbutton')).removeClass('active2');
+  }
+  else
+  {
+    $(document.getElementById('livebutton')).addClass('active1');
+    $(document.getElementById('connectbutton')).addClass('active2');
+  }
 }, 500);
 
-// let work = setInterval(() => {
-//   for (let i = 0; i < code_editors.length; i++) {
-//     let text = code_editors[i].getValue();
-//     ipcRenderer.send("live-editing", text);
-//   }
-// }, 500);
+
+document.getElementById('livebutton').addEventListener('click',()=>{
+  for(let i=0;i<tabs.length;i++)
+  {
+    if($(document.getElementById("tab" + tabs[i][2].toString())).hasClass('active'))
+    {
+      if(tabs[i][0] == "Untitled Tab")
+      {
+        alert("Save the file before sharing!!")
+      }
+      else
+      {
+        let token;
+        ipcRenderer.send('generate-token')
+        ipcRenderer.on('receive-token',(e,arg)=>{
+          // token = arg;
+          token = "http://localhost:8000/livecolab/"+arg;
+          prompt({
+            title: 'The generated url for file sharing',
+            label: 'Share the line to connect:',
+            value: token,
+            inputAttrs: {
+                type: 'text'
+            },
+          
+          })
+          .then((r) => {
+            tabs[i][3] = true
+            tabs[i][4] = token
+          })
+          .catch(console.error);
+        })
+      }
+    }
+  }
+})
+
+document.getElementById('connectbutton').addEventListener('click',()=>{
+  for(let i=0;i<tabs.length;i++)
+  {
+    if($(document.getElementById("tab" + tabs[i][2].toString())).hasClass('active'))
+    {
+      if(tabs[i][0] == "Untitled Tab")
+      {
+        alert("Save the file before sharing!!")
+      }
+      else
+      {
+        prompt({
+          title: 'Connect to live host',
+          label: 'Enter the url to connect:',
+          value: '',
+          inputAttrs: {
+              type: 'text'
+          },
+          type: 'input'
+        })
+        .then((r) => {
+            if(r === null) {
+                console.log('user cancelled');
+            } 
+        })
+        .catch(console.error);
+      }
+    }
+  }
+})
