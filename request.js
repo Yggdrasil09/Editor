@@ -4,8 +4,9 @@ self.addEventListener('message',(e)=>{
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST" , data.url, false ); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
-    console.log(data)
     xmlHttp.send(JSON.stringify(data));
-    console.log(xmlHttp.responseText);
+    var result = (xmlHttp.responseText).data;
+
+    self.postMessage(result);
 
 },false);

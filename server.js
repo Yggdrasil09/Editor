@@ -15,23 +15,39 @@ express_app.use(cors());
 var merge_data = {};
 
 express_app.post("/livecolab/:id", (req, res) => {
-  console.log(req.params);
-  console.log("body : ",req.body);
+
   let id = req.params;
   let text = req.body.txt;
-  if(!(id in mergedata))
+
+  let send_data;
+  let finalDoc;
+
+  if(!(id in merge_data))
   {
     merge_data[id] = text;
+    send_data = text;
   }
   else
   {
-    
+    let doc1 = Automerge.from({ cards: [] });
+    doc1 = Automerge.change(doc1, 'Add card', doc => {
+      doc.cards.push({ title: merge_data[id], done: false })
+    })
+
+    let doc2 = Automerge.from({ cards: [] });
+    doc2 = Automerge.change(doc2, 'Add another card', doc => {
+      doc.cards.push({ title: text, done: false })
+    })
+
+    finalDoc = Automerge.merge(doc1, doc2)
+    merge_data[id] = finalDoc.cards[0].title;
+    send_data = finalDoc.cards[0].title;
   }
 
   res.json({
-    message:
-      "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes."
+    data : send_data
   });
+
 });
 
 express_app.listen(8000, () => {

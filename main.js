@@ -3,7 +3,6 @@ const Automerge = require("automerge");
 const TokenGenerator = require("uuid-token-generator");
 const { ipcMain } = require("electron");
 
-let doc1 = Automerge.from({ cards: [] });
 
 let win;
 

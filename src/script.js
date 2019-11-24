@@ -45,14 +45,14 @@ window.onkeyup = function(e) {
     $(div).append(label);
     $(body_area).append(div);
 
-    tabs.push(["Untitled Tab", "default", tabs.length + 1,false,""]);
+    tabs.push(["Untitled Tab", "default", tabs.length + 1,false,"",false,""]);
 
     let textarea = document.getElementById("code" + tabs.length.toString());
     let editor = CodeMirror.fromTextArea(textarea, {
       lineNumbers: true,
       border: true,
-      theme: "eclipse",
-      mode: "application/json",
+      theme: "erlang-dark",
+      mode: "text/javascript",
       gutters: ["CodeMirror-lint-markers"],
       styleActiveLine: true,
       lint: true
@@ -116,9 +116,24 @@ window.onkeyup = function(e) {
                       filenme : filename,
                       url : tabs[i][4]
                     }
-                    console.log("connecting...")
                     var share_worker = new Worker('../request.js');
                     share_worker.postMessage(data);
+                    share_worker.addEventListener('message',(result)=>{
+                      code_editors[i].setvalue(result);
+                    })
+                  }
+                  else if(tabs[i][5] == true)
+                  {
+                    let data = {
+                      txt : text,
+                      filenme : filename,
+                      url : tabs[i][6]
+                    }
+                    var share_worker = new Worker('../request.js');
+                    share_worker.postMessage(data);
+                    share_worker.addEventListener('message',(result)=>{
+                      code_editors[i].setvalue(result);
+                    })
                   }  
                 })
               }
@@ -227,6 +242,11 @@ document.getElementById('connectbutton').addEventListener('click',()=>{
         .then((r) => {
             if(r === null) {
                 console.log('user cancelled');
+            }
+            else
+            {
+              tabs[i][5] = true;
+              tabs[i][6] = r;
             } 
         })
         .catch(console.error);
